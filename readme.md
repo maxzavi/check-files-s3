@@ -32,3 +32,18 @@ Se generarán 3 archivos de salida, en la carpeta **files**:
 - data.err conteniendo los archivos no encontrados
 - data500.err conteniendo los archivos con error 500, que puede ser por timeout, estos se deben volver a procesar
 - data.out conteniendo todos los registros procesados, como también el código de respuesta: 200 Ok, 404 No encontrado, 500 Error en el request
+
+
+# Extraer datos de MDM
+
+Primero conectarse via ssh
+
+```cmd
+ssh user@hoss
+```
+
+Luego generar listado
+
+```
+ls -l --time-style=full /workarea/assetpush/backup | grep 2023-10-18
+```
