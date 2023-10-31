@@ -1,8 +1,8 @@
 const { log } = require('console')
-const fs = require('fs')
 
-const { writeFile,cleanFile,getLines } = require('./file.js');
+const { writeFile,cleanFile,getLines } = require('./file.js')
 const { getS3Result } = require('./reqs3.js')
+const { exit } = require('process')
 
 const main= async ()=>{
     const errFile="files/data.err"
@@ -16,7 +16,7 @@ const main= async ()=>{
     cleanFile(errFile500)
     
     const dataFile = await getLines("files/data.in",blockSize)
-    for(let i=0; i<dataFile.blocks.length; i++){
+    for(let i=0 ;i<dataFile.blocks.length ;i++){
         const resp=await getS3Result (dataFile.blocks[i])
         resp.forEach(item=>{
             log(item)
@@ -29,6 +29,8 @@ const main= async ()=>{
             }
         })
     }
+    console.log('End')
 }
 
 main()
+exit
