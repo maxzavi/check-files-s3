@@ -20,11 +20,11 @@ const main= async ()=>{
         const resp=await getS3Result (dataFile.blocks[i])
         resp.forEach(item=>{
             log(item)
-            writeFile(dataOut,`${item.filename}\t${item.dateFile}\t${item.statuscode}`)
-            if(item.statuscode=== 404){
-                writeFile(errFile,`${item.filename}\t${item.dateFile}\t${item.statuscode}`)
+            writeFile(dataOut,`${item.filename}\t${item.dateFile}\t${item.result.status}\t${item.result.last_modified}`)
+            if(item.result.status=== 404){
+                writeFile(errFile,`${item.filename}\t${item.dateFile}\t${item.result.status}`)
             }
-            if(item.statuscode=== 500){
+            if(item.result.status=== 500){
                 writeFile(errFile500,`${item.filename}\t${item.dateFile}`)
             }
         })

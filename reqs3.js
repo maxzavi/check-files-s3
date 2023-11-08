@@ -14,7 +14,7 @@ const getS3Result = async (data)=>{
             result.push({
                 filename:data[i].filename,
                 dateFile:data[i].dateFile,
-                statuscode: rs[i] 
+                result: rs[i] 
             })
         }
     })
@@ -30,14 +30,23 @@ const searchImageInS3= async (filename)=>{
     } 
     let p = new Promise((resolve)=>{
         const req = https.request(options, (res) =>{
-            resolve(res.statusCode)
-            res.setEncoding("utf8")
+            //console.log(res.headers);
+            const { 'last-modified': last_modified } = res.headers
+            //console.log(new Date(last_modified).toISOString());
+            const last_modifiedf = new Date(last_modified).toISOString()
+            resolve({
+                status:res.statusCode,
+                last_modified: last_modifiedf
+            })
+            //res.setEncoding("utf8")
             //res.on("data",  (chunk) =>{
             //})
         })
         req.on('error', (err) => {
             log(err)
-            resolve(500)
+            resolve({
+                status:500
+            })
         })
         req.end()    
     })
